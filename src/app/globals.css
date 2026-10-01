@@ -1,26 +1,173 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-ice: #e7eff5;
+  --color-cobalt: #103b76;
+  --color-navy: #163e75;
+  --color-ink: #0b2a55;
+  --color-orange: #ff5b2b;
+  /* Orange for small text: #ff5b2b is reserved for large numerals and fills. */
+  --color-ember: #c2410c;
+  --color-surface: #f3f7fa;
+  --color-muted: #536d88;
+  --color-line: #c8d8e6;
+  --color-sky: #a9c4e6;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-bodoni), "Bodoni MT", Didot, Georgia, serif;
+  --animate-rise: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    background: var(--color-ice);
+    color: var(--color-cobalt);
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-orange);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: var(--color-cobalt);
+    color: var(--color-ice);
+  }
+  dialog::backdrop {
+    background: rgb(11 42 85 / 0.45);
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 800;
+    font-variation-settings: "opsz" 26;
+    letter-spacing: -0.034em;
+    line-height: 0.98;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0 1.25rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .btn-primary {
+    background: var(--color-orange);
+    color: var(--color-ink);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #ff6f45;
+  }
+  .btn-hero {
+    min-height: 3.75rem;
+    padding: 0 2.75rem;
+    border-radius: 0.7rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+  .btn-outline {
+    border: 1.5px solid var(--color-cobalt);
+    color: var(--color-cobalt);
+  }
+  .btn-outline:hover:not(:disabled) {
+    background: rgb(16 59 118 / 0.06);
+  }
+  .btn-solid {
+    background: var(--color-cobalt);
+    color: var(--color-ice);
+  }
+  .btn-solid:hover:not(:disabled) {
+    background: var(--color-ink);
+  }
+  .link {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 5px;
+  }
+  .link:hover {
+    text-decoration-color: var(--color-orange);
+  }
+  .card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    border-radius: 1.375rem;
+  }
+  .field {
+    width: 100%;
+    height: 3.375rem;
+    padding: 0 1rem;
+    border: 1.5px solid var(--color-line);
+    border-radius: 0.75rem;
+    background: #fff;
+    color: var(--color-cobalt);
+    font-size: 1rem;
+  }
+  .field:hover {
+    border-color: var(--color-sky);
+  }
+  .field:focus-visible {
+    outline: 3px solid var(--color-orange);
+    outline-offset: 1px;
+    border-color: var(--color-cobalt);
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    height: 1.75rem;
+    padding: 0 0.7rem;
+    border: 1.5px solid currentColor;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
